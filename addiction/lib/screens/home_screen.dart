@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 import '../services/profile_service.dart';
 import '../services/craving_service.dart';
 
@@ -15,40 +14,11 @@ class _HomeScreenState extends State<HomeScreen> {
   final CravingService _cravingService = CravingService();
   int _soberDays = 0;
   List<String> _predictedTimes = [];
-  BannerAd? _bannerAd;
-  bool _isAdLoaded = false;
 
   @override
   void initState() {
     super.initState();
     _loadData();
-    _loadBannerAd();
-  }
-
-  @override
-  void dispose() {
-    _bannerAd?.dispose();
-    super.dispose();
-  }
-
-  void _loadBannerAd() {
-    _bannerAd = BannerAd(
-      adUnitId: 'ca-app-pub-1006738837519055/1036845538',
-      size: AdSize.banner,
-      request: AdRequest(),
-      listener: BannerAdListener(
-        onAdLoaded: (_) {
-          setState(() {
-            _isAdLoaded = true;
-          });
-        },
-        onAdFailedToLoad: (ad, error) {
-          ad.dispose();
-        },
-      ),
-    );
-
-    _bannerAd?.load();
   }
 
   Future<void> _loadData() async {
@@ -79,127 +49,126 @@ class _HomeScreenState extends State<HomeScreen> {
         onRefresh: _loadData,
         child: SingleChildScrollView(
           physics: const AlwaysScrollableScrollPhysics(),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              if (_isAdLoaded)
-                Container(
-                  alignment: Alignment.center,
-                  width: _bannerAd!.size.width.toDouble(),
-                  height: _bannerAd!.size.height.toDouble(),
-                  child: AdWidget(ad: _bannerAd!),
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Card(
+                  elevation: 4,
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      children: [
+                        Text(
+                          '$_soberDays',
+                          style: TextStyle(
+                            fontSize: 48,
+                            fontWeight: FontWeight.bold,
+                            color: Theme.of(context).primaryColor,
+                          ),
+                        ),
+                        const Text(
+                          'jours sans rechute',
+                          style: TextStyle(fontSize: 18),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Card(
-                      elevation: 4,
-                      child: Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Column(
-                          children: [
-                            Text(
-                              '$_soberDays',
-                              style: TextStyle(
-                                fontSize: 48,
-                                fontWeight: FontWeight.bold,
-                                color: Theme.of(context).primaryColor,
-                              ),
-                            ),
-                            const Text(
-                              'jours sans rechute',
-                              style: TextStyle(fontSize: 18),
-                            ),
-                          ],
+                const SizedBox(height: 20),
+                Card(
+                  elevation: 3,
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          'Prédiction de cravings',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    Card(
-                      elevation: 3,
-                      child: Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              'Prédiction de cravings',
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
+                        const SizedBox(height: 12),
+                        _predictedTimes.isEmpty
+                            ? const Text(
+                                'Continuez à enregistrer vos cravings pour obtenir des prédictions personnalisées',
+                                style: TextStyle(fontStyle: FontStyle.italic),
+                              )
+                            : Column(
+                                children: _predictedTimes
+                                    .map((time) => ListTile(
+                                          leading: const Icon(Icons.access_time),
+                                          title: Text('Autour de $time'),
+                                          dense: true,
+                                        ))
+                                    .toList(),
                               ),
-                            ),
-                            const SizedBox(height: 12),
-                            _predictedTimes.isEmpty
-                                ? const Text(
-                                    'Continuez à enregistrer vos cravings pour obtenir des prédictions personnalisées',
-                                    style: TextStyle(fontStyle: FontStyle.italic),
-                                  )
-                                : Column(
-                                    children: _predictedTimes
-                                        .map((time) => ListTile(
-                                              leading: const Icon(Icons.access_time),
-                                              title: Text('Autour de $time'),
-                                              dense: true,
-                                            ))
-                                        .toList(),
-                                  ),
-                          ],
-                        ),
-                      ),
+                      ],
                     ),
-                    const SizedBox(height: 20),
-                    ElevatedButton.icon(
-                      icon: const Icon(Icons.add_circle),
-                      label: const Text('Enregistrer un craving'),
-                      style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(vertical: 12),
-                      ),
-                      onPressed: () {
-                        Navigator.pushNamed(context, '/record-craving');
-                      },
-                    ),
-                    const SizedBox(height: 12),
-                    OutlinedButton.icon(
-                      icon: const Icon(Icons.history),
-                      label: const Text('Historique des cravings'),
-                      style: OutlinedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(vertical: 12),
-                      ),
-                      onPressed: () {
-                        Navigator.pushNamed(context, '/history');
-                      },
-                    ),
-                    const SizedBox(height: 20),
-                    Card(
-                      color: Theme.of(context).primaryColor.withOpacity(0.1),
-                      child: const Padding(
-                        padding: EdgeInsets.all(16.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Conseil du jour',
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            SizedBox(height: 8),
-                            Text(
-                              'Les envies irrésistibles durent généralement moins de 20 minutes. Résister à un craving le rend plus faible la prochaine fois.',
-                              style: TextStyle(fontSize: 16),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
-              ),
-            ],
+                const SizedBox(height: 20),
+                ElevatedButton.icon(
+                  icon: const Icon(Icons.add_circle),
+                  label: const Text('Enregistrer un craving'),
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(vertical: 12),
+                  ),
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/record-craving');
+                  },
+                ),
+                const SizedBox(height: 12),
+                OutlinedButton.icon(
+                  icon: const Icon(Icons.history),
+                  label: const Text('Historique des cravings'),
+                  style: OutlinedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(vertical: 12),
+                  ),
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/history');
+                  },
+                ),
+                const SizedBox(height: 12),
+                OutlinedButton.icon(
+                  icon: const Icon(Icons.insights),
+                  label: const Text('Prédictions avancées'),
+                  style: OutlinedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(vertical: 12),
+                  ),
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/prediction');
+                  },
+                ),
+                const SizedBox(height: 20),
+                Card(
+                  color: Theme.of(context).primaryColor.withOpacity(0.1),
+                  child: const Padding(
+                    padding: EdgeInsets.all(16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Conseil du jour',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: 8),
+                        Text(
+                          'Les envies irrésistibles durent généralement moins de 20 minutes. Résister à un craving le rend plus faible la prochaine fois.',
+                          style: TextStyle(fontSize: 16),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

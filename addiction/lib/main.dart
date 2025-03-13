@@ -1,18 +1,19 @@
 // lib/main.dart
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'screens/setup_profile_screen.dart';
 import 'screens/home_screen.dart';
 import 'screens/record_craving_screen.dart';
 import 'screens/craving_history_screen.dart';
 import 'screens/emergency_screen.dart';
+import 'screens/setup_profile_screen.dart';
 import 'services/profile_service.dart';
 import 'models/user_profile.dart';
+import 'screens/craving_prediction_screen.dart'; // Add this import
+
+
 
 void main() {
-  WidgetsFlutterBinding.ensureInitialized();
-  MobileAds.instance.initialize();
   runApp(RecoveryApp());
 }
 
@@ -56,7 +57,7 @@ class RecoveryApp extends StatelessWidget {
             );
           }
           
-          // If profile exists, go to home screen, otherwise set up profile
+          // Si le profil existe, aller à l'écran d'accueil, sinon configurer le profil
           if (snapshot.hasData && snapshot.data != null) {
             return HomeScreen();
           } else {
@@ -69,6 +70,10 @@ class RecoveryApp extends StatelessWidget {
         '/record-craving': (context) => RecordCravingScreen(),
         '/history': (context) => CravingHistoryScreen(),
         '/emergency': (context) => EmergencyScreen(),
+        '/profile': (context) => SetupProfileScreen(),
+        '/prediction': (context) => CravingPredictionScreen(), // Add this route
+        
+
       },
     );
   }
