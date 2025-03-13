@@ -206,7 +206,7 @@ class AdvancedCravingAnalysis {
     }
     
     // 1. Fréquence récente (72 dernières heures)
-    final threeDaysAgo = now.subtract(Duration(hours: 72));
+    final threeDaysAgo = now.subtract(const Duration(hours: 72));
     final veryRecentCravings = recentCravings.where((c) => c.timestamp.isAfter(threeDaysAgo)).toList();
     
     // 2. Calculer l'augmentation de la fréquence

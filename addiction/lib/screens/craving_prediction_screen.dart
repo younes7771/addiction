@@ -5,6 +5,8 @@ import '../services/advanced_craving_analysis.dart';
 import 'package:intl/intl.dart';
 
 class CravingPredictionScreen extends StatefulWidget {
+  const CravingPredictionScreen({super.key});
+
   @override
   _CravingPredictionScreenState createState() => _CravingPredictionScreenState();
 }
@@ -53,29 +55,29 @@ class _CravingPredictionScreenState extends State<CravingPredictionScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Advanced Predictions'),
+        title: const Text('Advanced Predictions'),
       ),
       body: _isLoading 
-          ? Center(child: CircularProgressIndicator())
+          ? const Center(child: CircularProgressIndicator())
           : RefreshIndicator(
               onRefresh: _loadPredictions,
               child: SingleChildScrollView(
-                physics: AlwaysScrollableScrollPhysics(),
+                physics: const AlwaysScrollableScrollPhysics(),
                 child: Padding(
-                  padding: EdgeInsets.all(16.0),
+                  padding: const EdgeInsets.all(16.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       _buildVulnerabilityCard(),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       _circadianPredictions.isEmpty
                           ? _buildNoDataCard('hourly predictions')
                           : _buildCircadianPredictionsCard(),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       _triggerAnalysis.isEmpty
                           ? _buildNoDataCard('trigger analysis')
                           : _buildTriggerAnalysisCard(),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       _buildRecommendationsCard(),
                     ],
                   ),
@@ -105,18 +107,18 @@ class _CravingPredictionScreenState extends State<CravingPredictionScreen> {
     return Card(
       color: cardColor,
       child: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               'Current Vulnerability Index',
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             Row(
               children: [
                 Expanded(
@@ -130,7 +132,7 @@ class _CravingPredictionScreenState extends State<CravingPredictionScreen> {
                     minHeight: 10,
                   ),
                 ),
-                SizedBox(width: 16),
+                const SizedBox(width: 16),
                 Text(
                   '$vulnerabilityPercentage%',
                   style: TextStyle(
@@ -142,18 +144,18 @@ class _CravingPredictionScreenState extends State<CravingPredictionScreen> {
                 ),
               ],
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             Text(
               'Risk Level: $riskLevel',
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Text(
               _getVulnerabilityMessage(_currentVulnerability),
-              style: TextStyle(fontSize: 14),
+              style: const TextStyle(fontSize: 14),
             ),
           ],
         ),
@@ -164,18 +166,18 @@ class _CravingPredictionScreenState extends State<CravingPredictionScreen> {
   Widget _buildCircadianPredictionsCard() {
     return Card(
       child: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               'Hourly Craving Predictions',
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             ...List.generate(
               _circadianPredictions.length,
               (index) {
@@ -194,14 +196,14 @@ class _CravingPredictionScreenState extends State<CravingPredictionScreen> {
                 }
                 
                 return Padding(
-                  padding: EdgeInsets.only(bottom: 12.0),
+                  padding: const EdgeInsets.only(bottom: 12.0),
                   child: Row(
                     children: [
-                      Container(
+                      SizedBox(
                         width: 60,
                         child: Text(
                           '${hour.toString().padLeft(2, '0')}h00',
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -214,7 +216,7 @@ class _CravingPredictionScreenState extends State<CravingPredictionScreen> {
                           minHeight: 8,
                         ),
                       ),
-                      SizedBox(width: 12),
+                      const SizedBox(width: 12),
                       Text(
                         'Intensity: $intensity',
                         style: TextStyle(
@@ -236,18 +238,18 @@ class _CravingPredictionScreenState extends State<CravingPredictionScreen> {
   Widget _buildTriggerAnalysisCard() {
     return Card(
       child: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               'Trigger Analysis',
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             ...List.generate(
               _triggerAnalysis.length,
               (index) {
@@ -257,7 +259,7 @@ class _CravingPredictionScreenState extends State<CravingPredictionScreen> {
                 final impact = trigger['impact'].toDouble();
                 
                 return Padding(
-                  padding: EdgeInsets.only(bottom: 16.0),
+                  padding: const EdgeInsets.only(bottom: 16.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -266,7 +268,7 @@ class _CravingPredictionScreenState extends State<CravingPredictionScreen> {
                           Expanded(
                             child: Text(
                               triggerName,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -281,7 +283,7 @@ class _CravingPredictionScreenState extends State<CravingPredictionScreen> {
                           ),
                         ],
                       ),
-                      SizedBox(height: 8),
+                      const SizedBox(height: 8),
                       LinearProgressIndicator(
                         value: impact / 10,
                         backgroundColor: Colors.grey.shade200,
@@ -291,7 +293,7 @@ class _CravingPredictionScreenState extends State<CravingPredictionScreen> {
                         ),
                         minHeight: 6,
                       ),
-                      SizedBox(height: 4),
+                      const SizedBox(height: 4),
                       Text(
                         'Frequency: $frequency times',
                         style: TextStyle(
@@ -313,16 +315,16 @@ class _CravingPredictionScreenState extends State<CravingPredictionScreen> {
   Widget _buildNoDataCard(String dataType) {
     return Card(
       child: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Icon(
+            const Icon(
               Icons.info_outline,
               size: 48,
               color: Colors.grey,
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             Text(
               'Not enough data for $dataType',
               textAlign: TextAlign.center,
@@ -331,7 +333,7 @@ class _CravingPredictionScreenState extends State<CravingPredictionScreen> {
                 color: Colors.grey.shade700,
               ),
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Text(
               'Continue recording your cravings to get personalized insights',
               textAlign: TextAlign.center,
@@ -350,30 +352,30 @@ class _CravingPredictionScreenState extends State<CravingPredictionScreen> {
     return Card(
       color: Colors.blue.shade50,
       child: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               'Recommendations',
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             _buildRecommendationItem(
               icon: Icons.timer,
               title: 'Plan ahead for high-risk times',
               description: 'Prepare coping strategies for your predicted high-risk periods.',
             ),
-            SizedBox(height: 12),
+            const SizedBox(height: 12),
             _buildRecommendationItem(
               icon: Icons.psychology,
               title: 'Recognize your triggers',
               description: 'Notice patterns in what situations trigger your cravings.',
             ),
-            SizedBox(height: 12),
+            const SizedBox(height: 12),
             _buildRecommendationItem(
               icon: Icons.equalizer,
               title: 'Track your progress',
@@ -398,22 +400,22 @@ class _CravingPredictionScreenState extends State<CravingPredictionScreen> {
           size: 24,
           color: Colors.blue.shade700,
         ),
-        SizedBox(width: 16),
+        const SizedBox(width: 16),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 title,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 4),
+              const SizedBox(height: 4),
               Text(
                 description,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 14,
                 ),
               ),

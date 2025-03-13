@@ -59,18 +59,18 @@ class RecoveryApp extends StatelessWidget {
           
           // Si le profil existe, aller à l'écran d'accueil, sinon configurer le profil
           if (snapshot.hasData && snapshot.data != null) {
-            return HomeScreen();
+            return const HomeScreen();
           } else {
-            return SetupProfileScreen();
+            return const SetupProfileScreen();
           }
         },
       ),
       routes: {
-        '/home': (context) => HomeScreen(),
-        '/record-craving': (context) => RecordCravingScreen(),
-        '/history': (context) => CravingHistoryScreen(),
+        '/home': (context) => const HomeScreen(),
+        '/record-craving': (context) => const RecordCravingScreen(),
+        '/history': (context) => const CravingHistoryScreen(),
         '/emergency': (context) => EmergencyScreen(),
-        '/profile': (context) => SetupProfileScreen(),
+        '/profile': (context) => const SetupProfileScreen(),
         '/prediction': (context) => CravingPredictionScreen(), // Add this route
         
 

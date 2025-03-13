@@ -122,7 +122,7 @@ class _RecordCravingScreenState extends State<RecordCravingScreen> {
                     foregroundColor: Colors.white,
                     padding: const EdgeInsets.symmetric(vertical: 12),
                   ),
-                  child: Text('Obtenir des recommandations'),
+                  child: const Text('Obtenir des recommandations'),
                 ),
                 if (_showRecommendations) ...[
                   const SizedBox(height: 20),
@@ -152,7 +152,7 @@ class _RecordCravingScreenState extends State<RecordCravingScreen> {
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 12),
                   ),
-                  child: Text('Enregistrer ce craving'),
+                  child: const Text('Enregistrer ce craving'),
                 ),
               ],
             ),
