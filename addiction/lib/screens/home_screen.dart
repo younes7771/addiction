@@ -56,6 +56,9 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 Card(
                   elevation: 4,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: Column(
@@ -79,6 +82,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 const SizedBox(height: 20),
                 Card(
                   elevation: 3,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: Column(
@@ -116,6 +122,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   label: const Text('Enregistrer un craving'),
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 12),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
                   ),
                   onPressed: () {
                     Navigator.pushNamed(context, '/record-craving');
@@ -127,6 +136,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   label: const Text('Historique des cravings'),
                   style: OutlinedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 12),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
                   ),
                   onPressed: () {
                     Navigator.pushNamed(context, '/history');
@@ -138,6 +150,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   label: const Text('Prédictions avancées'),
                   style: OutlinedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 12),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
                   ),
                   onPressed: () {
                     Navigator.pushNamed(context, '/prediction');
@@ -146,6 +161,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 const SizedBox(height: 20),
                 Card(
                   color: Theme.of(context).primaryColor.withOpacity(0.1),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
                   child: const Padding(
                     padding: EdgeInsets.all(16.0),
                     child: Column(

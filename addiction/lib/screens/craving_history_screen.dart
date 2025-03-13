@@ -7,10 +7,10 @@ class CravingHistoryScreen extends StatefulWidget {
   const CravingHistoryScreen({super.key});
 
   @override
-  _CravingHistoryScreenState createState() => _CravingHistoryScreenState();
+  CravingHistoryScreenState createState() => CravingHistoryScreenState();
 }
 
-class _CravingHistoryScreenState extends State<CravingHistoryScreen> {
+class CravingHistoryScreenState extends State<CravingHistoryScreen> {
   final CravingService _cravingService = CravingService();
   List<Craving> _cravings = [];
   bool _isLoading = true;
@@ -42,6 +42,7 @@ class _CravingHistoryScreenState extends State<CravingHistoryScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Historique des cravings'),
+        backgroundColor: Colors.blueAccent,
       ),
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())
@@ -49,7 +50,7 @@ class _CravingHistoryScreenState extends State<CravingHistoryScreen> {
               ? const Center(
                   child: Text(
                     'Aucun craving enregistré pour le moment',
-                    style: TextStyle(fontSize: 16),
+                    style: TextStyle(fontSize: 16, color: Colors.grey),
                   ),
                 )
               : ListView.builder(
@@ -61,6 +62,10 @@ class _CravingHistoryScreenState extends State<CravingHistoryScreen> {
                         horizontal: 16,
                         vertical: 8,
                       ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      elevation: 5,
                       child: Padding(
                         padding: const EdgeInsets.all(16),
                         child: Column(
@@ -73,6 +78,7 @@ class _CravingHistoryScreenState extends State<CravingHistoryScreen> {
                                   _formatDateTime(craving.timestamp),
                                   style: const TextStyle(
                                     fontWeight: FontWeight.bold,
+                                    fontSize: 16,
                                   ),
                                 ),
                                 Container(
@@ -105,6 +111,7 @@ class _CravingHistoryScreenState extends State<CravingHistoryScreen> {
                                 'Notes: ${craving.notes}',
                                 style: const TextStyle(
                                   fontStyle: FontStyle.italic,
+                                  fontSize: 14,
                                 ),
                               ),
                             ],
